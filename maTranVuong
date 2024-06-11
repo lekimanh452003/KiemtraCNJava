@@ -1,0 +1,96 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package de28.cau1;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author fptshop
+ */
+public class MaTranVuong {
+
+    private int cap;
+    private int[][] a;
+
+    public MaTranVuong() {
+    }
+
+    public MaTranVuong(int cap, int[][] a) {
+        this.cap = cap;
+        //Kiểm tra số hàng và số cột có bằng cấp của ma trận hay không
+        if (a != null && a.length == cap && a[0].length == cap) {
+            //Nếu có: Sao chép dữ liệu từ mảng a vào this.a
+            this.a = new int[cap][cap];
+            for (int i = 0; i < cap; i++) {
+                for (int j = 0; j < cap; j++) {
+                    this.a[i][j] = a[i][j];
+                }
+            }
+        } else {
+        // Nếu không: Tạo một ma trận trống this.a mới
+            this.a = new int[cap][cap];
+        }
+
+    }
+
+    public int getCap() {
+        return cap;
+    }
+
+    public void setCap(int cap) {
+        this.cap = cap;
+    }
+
+    public int[][] getA() {
+        return a;
+    }
+
+    public void setA(int[][] a) {
+        this.a = a;
+    }
+
+    public void nhap() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nhập cấp của ma trận vuông: ");
+        this.cap = Integer.parseInt(sc.nextLine());
+        this.a = new int[cap][cap];
+
+        for (int i = 0; i < cap; i++) {
+            for (int j = 0; j < cap; j++) {
+                a[i][j] = Integer.parseInt(sc.nextLine());
+            }
+            System.out.println("");
+        }
+    }
+
+    public void xuat() {
+        System.out.println("Ma trận cấp " + this.cap);
+        for (int i = 0; i < cap; i++) {
+            for (int j = 0; j < cap; j++) {
+                System.out.print(a[i][j] + "  ");
+            }
+            System.out.println();
+        }
+    }
+
+    public MaTranVuong tich2MaTran(MaTranVuong other) {
+        if (this.cap != other.cap) {
+            System.out.println(" Không thể tính tích 2 ma trận vuông không cùng cấp!");
+            return null;
+        }
+        MaTranVuong kq = new MaTranVuong(this.cap, new int[this.cap][this.cap]);
+
+        for (int i = 0; i < cap; i++) {
+            for (int j = 0; j < cap; j++) {
+                kq.a[i][j] = 0;
+                for (int k = 0; k < cap; k++) {
+                    kq.a[i][j] += this.a[i][k] * other.a[k][j];
+                }
+            }
+        }
+        return kq;
+    }
+}
